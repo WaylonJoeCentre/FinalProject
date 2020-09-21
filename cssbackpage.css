@@ -1,6 +1,24 @@
 body {
   background-color: lightblue;
 }
-div.b {
-  text-align: left;
+.heading {
+  text-align: center;
+    background-color: orangered;
+}
+.bigbox {
+    width:auto;
+    text-align: center;
+    width: 600px;
+}
+.paragraph {
+    text-align: center;
+    background-color: coral;
+    width: 300px;
+}
+.img {
+    width: 300px;
+}
+.left {
+    text-align: center;
+    border: 5px solid black;
 }
