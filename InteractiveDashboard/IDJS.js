@@ -341,61 +341,78 @@ var initiateScatterPlot = function(bites)
 }
 
 
-//var clearTable = function()
-//{
- //   d3.selectAll("#DogPopularityTable tbody tr")
-  //  .remove();
-//}
-//var getBreeds = function(g)
-//{
-  //  return g.Breed;
-//}
 
 
-//var popularFill = function(popularityLevels)
-//{
-    //var rows = d3.select("#DogPopularityTable tbody")
-    //.selectAll("tr")
-    //.data(popularityLevels)
-    //.enter()
-    //.append("tr")
+
+
+
+
+
+var clearTable = function()
+{
+    d3.selectAll("#DogPopularityTable tbody tr")
+    .remove();
+}
+
+
+
+var popularFill = function(popularityLevels)
+{
+    console.log("popularityLevels",popularityLevels);
     
-   // var dogBreeds = popularityLevels.map(getBreeds);
-   // var popularDogs = dogBreeds.filter(function(dog)
- //   {
-     //   if(dog=="Retrievers (Labrador)")
- //   {
-  //      return true;
-  //  }
-  //  else if(dog=="German Shepherd Dogs")
-   //     {
-       //     return true;
-  //     }
- //   else if(dog=="Retrievers (Golden)")
-     //   {
-       //     return true;
-   //     }
-  //  else if(dog=="Bulldogs")
-   //     {
-     //       return true;
-    //    }
-  // else {
-     //   return false;
-  //  }
-  //  });
+    var popularDogs = popularityLevels.filter(function(dog)
+    {
+        if(dog.Breed=="Retrievers (Labrador)")
+    {
+        return true;
+    }
+    else if(dog.Breed=="German Shepherd Dogs")
+        {
+            return true;
+       }
+    else if(dog.Breed=="Retrievers (Golden)")
+        {
+            return true;
+        }
+    else if(dog.Breed=="Bulldogs")
+        {
+            return true;
+        }
+   else {
+        return false;
+    }
+    });
+    
+    var rows = d3.select("#DogPopularityTable tbody")
+    .selectAll("tr")
+    .data(popularDogs)
+    .enter()
+    .append("tr")
+    
+    
+    //console.log("popularDogs",popularDogs);
     
     
     
+rows.append("td")
+.text(function(dog)
+     {
+    return dog.Breed
+})
 //rows.append("td")
-//.text(popularDogs)
+//.text(popularDogs[1])
+//rows.append("td")
+//.text(popularDogs[2])
+//rows.append("td")
+//.text(popularDogs[3])
     
-//}
+}
 
-//var switchTable = function(popularityLevels) {
+var switchTable = function(popularityLevels) {
     //d3.select("")
     //clearTable();
-    //popularFill(popularityLevels);
-//}
+    popularFill(popularityLevels);
+}
 
 
 
@@ -424,7 +441,7 @@ var successFCN = function(dogData)
     var aggressionLevels = dogData[1];
     var popularityLevels = dogData[2];
     initiateBarChart(bites);
-    //switchTable(popularityLevels);
+    switchTable(popularityLevels);
     initiateBarChartAggression(bites);
     initiateScatterPlot(bites);
 }
