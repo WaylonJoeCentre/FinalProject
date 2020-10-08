@@ -5,22 +5,20 @@ var drawRects = function(bites, target,graphDim,xScale,yScale,colorScale,colorBl
     .data(bites)
     .enter()
     .append("rect")
-    .attr("x", function(preference){
-        return xScale(preference.Breed);
-    })
+    .attr("x", xScale(0))
     .attr("y", function(preference){
-        return yScale(preference.Bites);
+        return yScale(preference.Breed);
     })
-    .attr("width",xScale.bandwidth())
-    .attr("height", function(preference){
-        return graphDim.height - yScale(preference.Bites)
+    .attr("width",function(preference){
+        return xScale(preference.Bites);
     })
-    .attr("fill",function(preference)
+    .attr("height", yScale.bandwidth)
+    .attr("fill", function(preference)
          {
             if (preference.Bites >= 1500) {
-        return colorScale(preference.bites);
+        return colorScale(preference.Bites);
     } else {
-        return colorBlueScale(preference.bites);
+        return colorBlueScale(preference.Bites);
     }});
     
 }
@@ -33,8 +31,8 @@ var drawAxis = function(graphDim,target,margins,xScale,yScale)
     target.append("g")
     .attr("transform", "translate(0," + graphDim.height + ")")
     .call(xAxis)
-    .selectAll("text")
-    .attr("transform","translate(-5,55) rotate(270)")
+    //.selectAll("text")
+    //.attr("transform","translate(-5,55) rotate(270)")
     
     
     target.append("g")
@@ -54,21 +52,21 @@ var drawRectLabels = function(graphDim,margins)
     .append("g")
     .classed("labels", true)
     
-    labels.append("g")
-    .attr("transform",makeTranslateString(20,margins.top+(graphDim.height/2)))
-        .append("text")
-        .text("Total Bites")
-        .classed("label",true)
-        .attr("text-anchor","middle")
-        .attr("transform","rotate(270)")
+    
+    labels.append("text")
+    .text("Total Bites")
+    .classed("label",true)
+    .attr("text-anchor","middle")
+    .attr("x",margins.left+(graphDim.width/2))
+    .attr("y",295)
 }
 
 
 var initiateBarChart = function(bites)
 {
-    var screen = {width:400, height:400}
+    var screen = {width:500, height:300}
     
-    var margins = {left:60,right:20,top:20,bottom:110}
+    var margins = {left:120,right:20,top:20,bottom:40}
     
     var graph = 
         {
@@ -83,14 +81,15 @@ var initiateBarChart = function(bites)
     .attr("transform",
           "translate("+margins.left+","+
                         margins.top+")");
-    var xScale = d3.scaleBand()
-    .domain(bites.map(function(d) { return d.Breed}))
+    var xScale = d3.scaleLinear()
+    .domain([0,2000])
     .range([0,graph.width])
-    .paddingInner(0.05);
     
-    var yScale = d3.scaleLinear()
-    .domain([0, 2000])
-    .range([graph.height, 0]);
+    
+    var yScale = d3.scaleBand()
+    .domain(bites.map(function(d) { return d.Breed}))
+    .range([0,graph.height])
+    .paddingInner(0.05)
     
     var colorScale = d3.scaleOrdinal()
         .range(["red"]);
@@ -208,12 +207,13 @@ var initiateBarChartAggression = function(bites)
     var yScale = d3.scaleBand()
     .domain(bites.map( function(d){ return d.Breed}))
     .range([0,graph.height])
+    .paddingInner(0.05)
 
     
     var colorScale = d3.scaleOrdinal()
-        .range(["red"]);
+        .range(["maroon"]);
     var colorBlueScale = d3.scaleOrdinal()
-        .range(["blue"]);
+        .range(["darkblue"]);
     
     drawAggressionRects(bites,target,graph,xScale,yScale,colorScale,colorBlueScale);
     drawAggressionAxis(graph,target,margins,xScale,yScale);
@@ -232,7 +232,7 @@ var initiateBarChartAggression = function(bites)
 
 
 
-var paintScatter = function(bites,graphDim,screen,xScale,yScale)
+var paintScatter = function(bites,graphDim,screen,xScale,yScale,colorScale,colorBlueScale)
 {
     d3.select("#DogComparisonChart")
     .selectAll("circle")
@@ -248,7 +248,13 @@ var paintScatter = function(bites,graphDim,screen,xScale,yScale)
           return yScale(dog.Bites);
           })
     .attr("r",5)
-    
+    .attr("fill",function(preference)
+         {
+            if (preference.Percent >= 80) {
+        return colorBlueScale(preference.Percent);
+    } else {
+        return colorScale(preference.Percent);
+   }})
     .on("mouseenter" ,function(dog)
       {
         
@@ -286,7 +292,7 @@ var drawScatterAxis = function(graphDim,target,margins,xScale,yScale)
     .call(yAxis);
 }
 
-var drawAggressionLabels = function(graphDim,margins)
+var drawAggressionScatter = function(graphDim,margins)
 {
     var labels = d3.select("#DogComparisonChart")
     .append("g")
@@ -297,7 +303,7 @@ var drawAggressionLabels = function(graphDim,margins)
     .classed("label",true)
     .attr("text-anchor","middle")
     .attr("x",margins.left+(graphDim.width/2))
-    .attr("y",400)
+    .attr("y",300)
     
     labels.append("g")
     .attr("transform",makeTranslateString(20,margins.top+(graphDim.height/2)))
@@ -312,7 +318,7 @@ var drawAggressionLabels = function(graphDim,margins)
 
 var initiateScatterPlot = function(bites)
 {
-    var screen = {width:500, height:400}
+    var screen = {width:500, height:300}
     var margins = {left:60,right:20,top:20,bottom:30}
     
     var graph = 
@@ -337,7 +343,13 @@ var initiateScatterPlot = function(bites)
     .domain([0,2000])
     .range([graph.height,0])
     
-    drawScatterAxis(graph,target,margins,xScale,yScale); paintScatter(bites,graph,screen,xScale,yScale);
+    var colorScale = d3.scaleOrdinal()
+        .range(["red"]);
+    var colorBlueScale = d3.scaleOrdinal()
+        .range(["blue"]);
+    
+    drawScatterAxis(graph,target,margins,xScale,yScale); paintScatter(bites,graph,screen,xScale,yScale,colorScale,colorBlueScale);
+    drawAggressionScatter(graph,margins);
 }
 
 
@@ -381,41 +393,224 @@ var popularFill = function(popularityLevels)
    else {
         return false;
     }
+    })
+var popularNums = popularityLevels.filter(function(dog)
+    {
+        if(dog.Rank=="1")
+    {
+        return true;
+    }
+    else if(dog.Rank=="2")
+        {
+            return true;
+       }
+    else if(dog.Rank=="3")
+        {
+            return true;
+        }
+    else if(dog.Rank=="4")
+        {
+            return true;
+        }
+   else {
+        return false;
+    }
     });
-    
     var rows = d3.select("#DogPopularityTable tbody")
     .selectAll("tr")
     .data(popularDogs)
     .enter()
     .append("tr")
+    //var rower = d3.select("#DogPopularityTable tbody")
+    //.selectAll("tr")
+    //.data(popularNums)
+    //.enter()
+    //.append("tr")
     
     
     //console.log("popularDogs",popularDogs);
-    
-    
     
 rows.append("td")
 .text(function(dog)
      {
     return dog.Breed
 })
-//rows.append("td")
-//.text(popularDogs[1])
-//rows.append("td")
-//.text(popularDogs[2])
-//rows.append("td")
-//.text(popularDogs[3])
+.data(popularNums)
+.enter()
+    
+rows.append("td")
+.text(function(dog)
+     {
+    return dog.Rank
+})
+    
+}
+var popularFillSmall = function(popularityLevels)
+{
+    console.log("popularityLevels",popularityLevels);
+    
+    var popularDogs = popularityLevels.filter(function(dog)
+    {
+        if(dog.Breed=="Shih Tzu")
+    {
+        return true;
+    }
+    else if(dog.Breed=="Chihuahuas")
+        {
+            return true;
+       }
+   else {
+        return false;
+    }
+    })
+var popularNums = popularityLevels.filter(function(dog)
+    {
+        if(dog.Rank=="20")
+    {
+        return true;
+    }
+    else if(dog.Rank=="30")
+        {
+            return true;
+       }
+   else {
+        return false;
+    }
+    });
+    var rows = d3.select("#DogPopularityTable tbody")
+    .selectAll("tr")
+    .data(popularDogs)
+    .enter()
+    .append("tr")
+    //var rower = d3.select("#DogPopularityTable tbody")
+    //.selectAll("tr")
+    //.data(popularNums)
+    //.enter()
+    //.append("tr")
+    
+    
+    //console.log("popularDogs",popularDogs);
+    
+rows.append("td")
+.text(function(dog)
+     {
+    return dog.Breed
+})
+.data(popularNums)
+.enter()
+    
+rows.append("td")
+.text(function(dog)
+     {
+    return dog.Rank
+})
+    
+}
+
+var popularFillAggressive = function(popularityLevels)
+{
+    console.log("popularityLevels",popularityLevels);
+    
+    var popularDogs = popularityLevels.filter(function(dog)
+    {
+        if(dog.Breed=="German Shepherd Dogs")
+    {
+        return true;
+    }
+    else if(dog.Breed=="Rottweilers")
+        {
+            return true;
+       }
+    else if(dog.Breed=="American Staffordshire Terriers")
+        {
+            return true;
+       }
+   else {
+        return false;
+    }
+    })
+var popularNums = popularityLevels.filter(function(dog)
+    {
+        if(dog.Rank=="2")
+    {
+        return true;
+    }
+    else if(dog.Rank=="8")
+        {
+            return true;
+       }
+    else if(dog.Rank=="81")
+        {
+            return true;
+       }
+   else {
+        return false;
+    }
+    });
+    var rows = d3.select("#DogPopularityTable tbody")
+    .selectAll("tr")
+    .data(popularDogs)
+    .enter()
+    .append("tr")
+    //var rower = d3.select("#DogPopularityTable tbody")
+    //.selectAll("tr")
+    //.data(popularNums)
+    //.enter()
+    //.append("tr")
+    
+    
+    //console.log("popularDogs",popularDogs);
+    
+rows.append("td")
+.text(function(dog)
+     {
+    return dog.Breed
+})
+.data(popularNums)
+.enter()
+    
+rows.append("td")
+.text(function(dog)
+     {
+    return dog.Rank
+})
     
 }
 
 var switchTable = function(popularityLevels) {
-    //d3.select("")
+    d3.select("#labelOne")
+    .on("click", function()
+       {
+        clearTable();
+        console.log("clicked")
+        popularFill(popularityLevels);
+    });
     //clearTable();
-    popularFill(popularityLevels);
+    //popularFill(popularityLevels);
+}
+var otherSwitchTable = function(popularityLevels) {
+    d3.select("#labelTwo")
+    .on("click", function()
+       {
+        clearTable();
+        console.log("clicked")
+        popularFillSmall(popularityLevels);
+    });
+    //clearTable();
+    //popularFill(popularityLevels);
 }
 
-
-
+var finalSwitchTable = function(popularityLevels) {
+    d3.select("#labelThree")
+    .on("click", function()
+       {
+        clearTable();
+        console.log("clicked")
+        popularFillAggressive(popularityLevels);
+    });
+    //clearTable();
+    //popularFill(popularityLevels);
+}
 
 
 
@@ -442,6 +637,8 @@ var successFCN = function(dogData)
     var popularityLevels = dogData[2];
     initiateBarChart(bites);
     switchTable(popularityLevels);
+    otherSwitchTable(popularityLevels);
+    finalSwitchTable(popularityLevels);
     initiateBarChartAggression(bites);
     initiateScatterPlot(bites);
 }

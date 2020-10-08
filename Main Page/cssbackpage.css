@@ -1,28 +1,40 @@
 body {
-  background-color: lightblue;
+  background-color: #EAE7DC;
 }
 .heading {
   text-align: center;
-    background-color: orangered;
+border-width: 5px;
+border-style: solid;
+border-color: #E98074;
+color: black;
+    font-family: "Aclonica";
 }
 .bigbox {
-    width:auto;
-    text-align: center;
-    width: 600px;
+    font-family: "Aclonica";
+  border-width: 5px;
+border-style: solid;
+border-color: #E98074;
+color: #8E8D8A;
+    height: 100px;
+text-align: center;
 }
 .paragraph {
     text-align: center;
-    background-color: coral;
-    width: 300px;
+    color: #8E8D8A;
+    font-family: "Aclonica";
 }
-.img {
-    width: 300px;
+.paragraphOne {
+    border-width: 5px;
+    border-style: solid;
+border-color: #E98074;
 }
-.left {
-    text-align: center;
-    border: 5px solid black;
+.paragraphTwo {
+    border-width: 5px;
+    border-style: solid;
+border-color: #E98074;
 }
-.percent {
-    text-align: center;
-    border: 5px solid black;
+.paragraphThree {
+    border-width: 5px;
+    border-style: solid;
+border-color: #E98074;
 }

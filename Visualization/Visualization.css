@@ -1,0 +1,93 @@
+body {
+    background-color: #EAE7DC;
+}
+#ByPass {
+    color: black;
+}
+.heading {
+text-align: center;
+border-width: 5px;
+border-style: solid;
+border-color: #E98074;
+color: black;
+}
+.Misinformation {
+    color: black;
+}
+#DogComparisonChart {
+    color: #8E8D8A;
+}
+#DogComparisonSection {
+    position:relative;
+    left: 30px;
+}
+.paragraph {
+    text-align: center;
+    float: right;
+    color: #8E8D8A;
+}
+.PitFacts {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+.Facts {
+    border-width: 5px;
+border-style: solid;
+border-color: #E85A4F;
+}
+.paragraphCall {
+    font-size: 20px;
+    font-weight: bold;
+    color:black;
+}
+.abuse {
+    border-width: 5px;
+border-style: solid;
+border-color: #E85A4F;
+}
+.finalParagraph {
+    font-size: 20px;
+    font-weight: bold;
+    color:black;
+}
+.bigbox {
+    font-family: "Aclonica";
+  border-width: 5px;
+border-style: solid;
+border-color: #E98074;
+color: #8E8D8A;
+}
+text.label {
+    color: #8E8D8A;
+}
+g.label {
+   color: #8E8D8A;
+}
+
+#tooltip.hidden
+{
+    display:none;
+}
+
+#tooltip
+{
+    position:absolute;
+    width:300px;
+    height:auto;
+    padding:10px;
+    background-color:white;
+    border-radius:10px;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+    pointer-events:none;
+}
+
+#BITE
+{
+  font-size:30px;  
+}
+
+#BREED
+{
+    font-size:60px;
+}

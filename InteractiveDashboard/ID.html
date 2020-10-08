@@ -3,11 +3,14 @@
 <head>
     
     <link rel="stylesheet" href="IDCSS.css">
+    <link href='https://fonts.googleapis.com/css?family=Aclonica' rel='stylesheet'>
 </head>
 <body>
+    <h3 id="mainHeader">Interactive Dashboard</h3>
+<div id="overall">
 <div id="DogBiteSection">
 <div id="DogBiteText">
-    <h2>Aggression levels in Dog Breeds</h2>
+    <h2 class="headerAll">Bite level by Dog Breeds</h2>
     <p>This table shows bites by dog Breed.</p>
 </div>
 <div id="DogBites">
@@ -15,11 +18,13 @@
     </svg>
 </div>
 </div>
-<div id="DogPopularitySection">
+<div id="DogPopularitySectionOverall">
 <div id="DogPopularityText">
 </div>
 <div id="DogPopularitySection">
-    <h6></h6><h6></h6><h6></h6>
+    <h2 class="headerAll">Dog Popularity</h2>
+    <p class="popText">This table Shows the popularity Rankings of different dog breeds.</p>
+    <p id="labelOne">PopularDogs</p><p id="labelTwo">Small Dogs</p><p id="labelThree">"Aggressive Dogs"</p>
     <table id="DogPopularityTable">
         <thead>
             <th>Dog Breed</th><th>Popularity Level</th>
@@ -31,7 +36,7 @@
 </div>
 <div id="DogAggressionSection">
 <div id="DogAggressionText">
-    <h2>Dog Aggression test Pass Rate</h2>
+    <h2 class="headerAll">Dog Aggression test Pass Rate</h2>
     <p>This table shows the number of dogs that passed a sociability test with humans.</p>
 </div>
 <div id="DogAggressionSectiontwo">
@@ -41,25 +46,23 @@
 </div>
 <div id="DogComparisonSection">
 <div id="DogComparisonText">
-    <h2>Dog Bites By Pass Rate</h2>
+    <h2 class="headerAll">Dog Bites By Pass Rate</h2>
     <p>This table shows the relationship between dog bites and socaibliltity.</p>
 </div>
 <div id="DogComparisonSectionChart">
     <svg id="DogComparisonChart">
     </svg>
-    <div class="hidden" id="tooltip">
+    
+</div>
+</div>
+<div class="hidden" id="tooltip">
         <div id="BITE"></div>
         <div id="BREED">
         </div>
     </div>
-</div>
-</div>
-<video width ="400" height="300" controls>
-<source src="../Data/IDVideo.mp4" type="video/mp4">
-    Interactive Dashboard Video
-</video>
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script src="IDJS.js"></script>
+</div>
 </body>
 
 
